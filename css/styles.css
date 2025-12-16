@@ -1,0 +1,54 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+nav button {
+  margin-right: 5px;
+}
+
+.panel {
+  max-width: 500px;
+  margin-top: 20px;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+input, select {
+  padding: 5px;
+}
+
+button {
+  width: fit-content;
+  padding: 6px 12px;
+}
+
+.ok {
+  margin-top: 10px;
+  color: green;
+}
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.tabla th, .tabla td {
+  border: 1px solid #ccc;
+  padding: 6px;
+  text-align: left;
+}
+
+.tabla th {
+  background: #f0f0f0;
+}
