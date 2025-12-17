@@ -26,6 +26,36 @@ Vue.component('hospedajes', {
           <input v-model="form.direccion">
         </label>
 
+        <label>
+          Ubicación (Coordenadas para Google Maps)
+          <input v-model="form.ubicacion">
+        </label>
+
+        <label>
+          Fotos (URLs separadas por comas)
+          <input v-model="form.fotos">
+        </label>
+
+        <label>
+          Teléfono fijo
+          <input v-model="form.telefonoFijo">
+        </label>
+
+        <label>
+          Celular con WhatsApp
+          <input v-model="form.celular">
+        </label>
+
+        <label>
+          Persona de contacto
+          <input v-model="form.contacto">
+        </label>
+
+        <label>
+          Descripción de los servicios
+          <textarea v-model="form.descripcion"></textarea>
+        </label>
+
         <button type="submit">Guardar</button>
       </form>
 
@@ -37,6 +67,12 @@ Vue.component('hospedajes', {
             <th>Nombre</th>
             <th>Tipo</th>
             <th>Dirección</th>
+            <th>Ubicación</th>
+            <th>Fotos</th>
+            <th>Teléfono Fijo</th>
+            <th>Celular</th>
+            <th>Contacto</th>
+            <th>Descripción</th>
             <th></th>
           </tr>
         </thead>
@@ -45,6 +81,12 @@ Vue.component('hospedajes', {
             <td>{{ item.nombre }}</td>
             <td>{{ item.tipo }}</td>
             <td>{{ item.direccion }}</td>
+            <td>{{ item.ubicacion }}</td>
+            <td>{{ item.fotos }}</td>
+            <td>{{ item.telefonoFijo }}</td>
+            <td>{{ item.celular }}</td>
+            <td>{{ item.contacto }}</td>
+            <td>{{ item.descripcion }}</td>
             <td>
               <button @click="eliminar(i)">❌</button>
             </td>
@@ -58,7 +100,13 @@ Vue.component('hospedajes', {
       form: {
         nombre: '',
         tipo: '',
-        direccion: ''
+        direccion: '',
+        ubicacion: '',
+        fotos: '',
+        telefonoFijo: '',
+        celular: '',
+        contacto: '',
+        descripcion: ''
       },
       lista: []
     }
@@ -71,7 +119,7 @@ Vue.component('hospedajes', {
     guardar() {
       this.lista.push({ ...this.form })
       localStorage.setItem('hospedajes', JSON.stringify(this.lista))
-      this.form = { nombre: '', tipo: '', direccion: '' }
+      this.form = { nombre: '', tipo: '', direccion: '', ubicacion: '', fotos: '', telefonoFijo: '', celular: '', contacto: '', descripcion: '' }
     },
     eliminar(index) {
       this.lista.splice(index, 1)
@@ -115,6 +163,36 @@ Vue.component('gastronomia', {
           <input v-model="form.horarios">
         </label>
 
+        <label>
+          Ubicación (Coordenadas para Google Maps)
+          <input v-model="form.ubicacion">
+        </label>
+
+        <label>
+          Fotos (URLs separadas por comas)
+          <input v-model="form.fotos">
+        </label>
+
+        <label>
+          Teléfono fijo
+          <input v-model="form.telefonoFijo">
+        </label>
+
+        <label>
+          Celular con WhatsApp
+          <input v-model="form.celular">
+        </label>
+
+        <label>
+          Persona de contacto
+          <input v-model="form.contacto">
+        </label>
+
+        <label>
+          Descripción de los servicios
+          <textarea v-model="form.descripcion"></textarea>
+        </label>
+
         <button type="submit">Guardar</button>
       </form>
 
@@ -126,6 +204,12 @@ Vue.component('gastronomia', {
             <th>Nombre</th>
             <th>Tipo</th>
             <th>Horarios</th>
+            <th>Ubicación</th>
+            <th>Fotos</th>
+            <th>Teléfono Fijo</th>
+            <th>Celular</th>
+            <th>Contacto</th>
+            <th>Descripción</th>
             <th></th>
           </tr>
         </thead>
@@ -134,6 +218,12 @@ Vue.component('gastronomia', {
             <td>{{ item.nombre }}</td>
             <td>{{ item.tipo }}</td>
             <td>{{ item.horarios }}</td>
+            <td>{{ item.ubicacion }}</td>
+            <td>{{ item.fotos }}</td>
+            <td>{{ item.telefonoFijo }}</td>
+            <td>{{ item.celular }}</td>
+            <td>{{ item.contacto }}</td>
+            <td>{{ item.descripcion }}</td>
             <td>
               <button @click="eliminar(i)">❌</button>
             </td>
@@ -144,7 +234,7 @@ Vue.component('gastronomia', {
   `,
   data() {
     return {
-      form: { nombre: '', tipo: '', horarios: '' },
+      form: { nombre: '', tipo: '', horarios: '', ubicacion: '', fotos: '', telefonoFijo: '', celular: '', contacto: '', descripcion: '' },
       lista: []
     }
   },
@@ -156,7 +246,7 @@ Vue.component('gastronomia', {
     guardar() {
       this.lista.push({ ...this.form })
       localStorage.setItem('gastronomia', JSON.stringify(this.lista))
-      this.form = { nombre: '', tipo: '', horarios: '' }
+      this.form = { nombre: '', tipo: '', horarios: '', ubicacion: '', fotos: '', telefonoFijo: '', celular: '', contacto: '', descripcion: '' }
     },
     eliminar(index) {
       this.lista.splice(index, 1)
