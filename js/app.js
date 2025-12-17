@@ -32,8 +32,8 @@ Vue.component('hospedajes', {
         </label>
 
         <label>
-          Fotos (URLs separadas por comas)
-          <input v-model="form.fotos">
+          Fotos (adjuntar imágenes)
+          <input type="file" multiple @change="onFileChange">
         </label>
 
         <label>
@@ -82,7 +82,11 @@ Vue.component('hospedajes', {
             <td>{{ item.tipo }}</td>
             <td>{{ item.direccion }}</td>
             <td>{{ item.ubicacion }}</td>
-            <td>{{ item.fotos }}</td>
+            <td>
+              <div v-for="foto in item.fotos" :key="foto">
+                <img :src="foto" style="width: 50px; height: 50px; margin: 2px;">
+              </div>
+            </td>
             <td>{{ item.telefonoFijo }}</td>
             <td>{{ item.celular }}</td>
             <td>{{ item.contacto }}</td>
@@ -102,7 +106,7 @@ Vue.component('hospedajes', {
         tipo: '',
         direccion: '',
         ubicacion: '',
-        fotos: '',
+        fotos: [],
         telefonoFijo: '',
         celular: '',
         contacto: '',
@@ -119,11 +123,22 @@ Vue.component('hospedajes', {
     guardar() {
       this.lista.push({ ...this.form })
       localStorage.setItem('hospedajes', JSON.stringify(this.lista))
-      this.form = { nombre: '', tipo: '', direccion: '', ubicacion: '', fotos: '', telefonoFijo: '', celular: '', contacto: '', descripcion: '' }
+      this.form = { nombre: '', tipo: '', direccion: '', ubicacion: '', fotos: [], telefonoFijo: '', celular: '', contacto: '', descripcion: '' }
     },
     eliminar(index) {
       this.lista.splice(index, 1)
       localStorage.setItem('hospedajes', JSON.stringify(this.lista))
+    },
+    onFileChange(event) {
+      const files = event.target.files;
+      this.form.fotos = [];
+      for (let file of files) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.form.fotos.push(e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
     }
   }
 })
@@ -169,8 +184,8 @@ Vue.component('gastronomia', {
         </label>
 
         <label>
-          Fotos (URLs separadas por comas)
-          <input v-model="form.fotos">
+          Fotos (adjuntar imágenes)
+          <input type="file" multiple @change="onFileChange">
         </label>
 
         <label>
@@ -219,7 +234,11 @@ Vue.component('gastronomia', {
             <td>{{ item.tipo }}</td>
             <td>{{ item.horarios }}</td>
             <td>{{ item.ubicacion }}</td>
-            <td>{{ item.fotos }}</td>
+            <td>
+              <div v-for="foto in item.fotos" :key="foto">
+                <img :src="foto" style="width: 50px; height: 50px; margin: 2px;">
+              </div>
+            </td>
             <td>{{ item.telefonoFijo }}</td>
             <td>{{ item.celular }}</td>
             <td>{{ item.contacto }}</td>
@@ -246,11 +265,22 @@ Vue.component('gastronomia', {
     guardar() {
       this.lista.push({ ...this.form })
       localStorage.setItem('gastronomia', JSON.stringify(this.lista))
-      this.form = { nombre: '', tipo: '', horarios: '', ubicacion: '', fotos: '', telefonoFijo: '', celular: '', contacto: '', descripcion: '' }
+      this.form = { nombre: '', tipo: '', horarios: '', ubicacion: '', fotos: [], telefonoFijo: '', celular: '', contacto: '', descripcion: '' }
     },
     eliminar(index) {
       this.lista.splice(index, 1)
       localStorage.setItem('gastronomia', JSON.stringify(this.lista))
+    },
+    onFileChange(event) {
+      const files = event.target.files;
+      this.form.fotos = [];
+      for (let file of files) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.form.fotos.push(e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
     }
   }
 })
