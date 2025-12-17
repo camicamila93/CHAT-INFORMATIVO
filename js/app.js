@@ -29,8 +29,6 @@ Vue.component('hospedajes', {
         <button type="submit">Guardar</button>
       </form>
 
-      <p v-if="mensaje" class="ok">{{ mensaje }}</p>
-
       <h3 v-if="lista.length">Hospedajes cargados</h3>
 
       <table v-if="lista.length" class="tabla">
@@ -39,6 +37,7 @@ Vue.component('hospedajes', {
             <th>Nombre</th>
             <th>Tipo</th>
             <th>Dirección</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -46,6 +45,9 @@ Vue.component('hospedajes', {
             <td>{{ item.nombre }}</td>
             <td>{{ item.tipo }}</td>
             <td>{{ item.direccion }}</td>
+            <td>
+              <button @click="eliminar(i)">❌</button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -58,17 +60,22 @@ Vue.component('hospedajes', {
         tipo: '',
         direccion: ''
       },
-      lista: [],
-      mensaje: ''
+      lista: []
     }
+  },
+  mounted() {
+    const datos = localStorage.getItem('hospedajes')
+    if (datos) this.lista = JSON.parse(datos)
   },
   methods: {
     guardar() {
       this.lista.push({ ...this.form })
-      this.mensaje = 'Hospedaje guardado correctamente'
+      localStorage.setItem('hospedajes', JSON.stringify(this.lista))
       this.form = { nombre: '', tipo: '', direccion: '' }
-
-      setTimeout(() => this.mensaje = '', 2000)
+    },
+    eliminar(index) {
+      this.lista.splice(index, 1)
+      localStorage.setItem('hospedajes', JSON.stringify(this.lista))
     }
   }
 })
