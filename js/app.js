@@ -429,8 +429,12 @@ Vue.component('puntos', {
     }
   },
   mounted() {
-    const datos = localStorage.getItem('puntos')
-    if (datos) this.lista = JSON.parse(datos)
+    obtenerPuntos().then(res => {
+      this.lista = res.data
+    }).catch(err => {
+      console.error(err)
+      this.lista = []
+    })
   },
   methods: {
     guardar() {
