@@ -395,6 +395,11 @@ Vue.component('puntos', {
           <input v-model="form.descripcion">
         </label>
 
+        <label>
+          Fotos (adjuntar imágenes)
+          <input type="file" multiple @change="onFileChange">
+        </label>
+
         <button type="submit">Guardar</button>
       </form>
 
@@ -406,6 +411,7 @@ Vue.component('puntos', {
             <th>Nombre</th>
             <th>Tipo</th>
             <th>Descripción</th>
+            <th>Fotos</th>
             <th></th>
           </tr>
         </thead>
@@ -414,6 +420,11 @@ Vue.component('puntos', {
             <td>{{ item.nombre }}</td>
             <td>{{ item.tipo }}</td>
             <td>{{ item.descripcion }}</td>
+            <td>
+              <div v-for="foto in item.fotos" :key="foto">
+                <img :src="foto" style="width: 50px; height: 50px; margin: 2px;">
+              </div>
+            </td>
             <td>
               <button @click="eliminar(i)">❌</button>
             </td>
@@ -424,7 +435,7 @@ Vue.component('puntos', {
   `,
   data() {
     return {
-      form: { nombre: '', tipo: 'Plaza', descripcion: '' },
+      form: { nombre: '', tipo: 'Plaza', descripcion: '', fotos: [] },
       lista: []
     }
   },
@@ -440,11 +451,22 @@ Vue.component('puntos', {
     guardar() {
       this.lista.push({ ...this.form })
       localStorage.setItem('puntos', JSON.stringify(this.lista))
-      this.form = { nombre: '', tipo: 'Plaza', descripcion: '' }
+      this.form = { nombre: '', tipo: 'Plaza', descripcion: '', fotos: [] }
     },
     eliminar(index) {
       this.lista.splice(index, 1)
       localStorage.setItem('puntos', JSON.stringify(this.lista))
+    },
+    onFileChange(event) {
+      const files = event.target.files;
+      this.form.fotos = [];
+      for (let file of files) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.form.fotos.push(e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
     }
   }
 })
