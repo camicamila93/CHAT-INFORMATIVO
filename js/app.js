@@ -1,7 +1,25 @@
-Vue.component('hospedajes', {
+Vue.component('prestadores', {
   template: `
     <div class="panel">
-      <h2>Hospedajes</h2>
+      <h2>Prestadores Turísticos</h2>
+      <div style="margin-bottom: 20px;">
+        <button @click="tipo='hospedajes'" :class="{ active: tipo === 'hospedajes' }">Hospedajes</button>
+        <button @click="tipo='gastronomia'" :class="{ active: tipo === 'gastronomia' }">Gastronomía</button>
+      </div>
+      <component :is="tipo"></component>
+    </div>
+  `,
+  data() {
+    return {
+      tipo: 'hospedajes'
+    }
+  }
+})
+
+Vue.component('hospedajes', {
+  template: `
+    <div>
+      <h3>Hospedajes</h3>
 
       <form @submit.prevent="guardar" class="formulario">
         <label>
@@ -52,14 +70,14 @@ Vue.component('hospedajes', {
         </label>
 
         <label>
-          Descripción de los servicios
+          Descripción
           <textarea v-model="form.descripcion"></textarea>
         </label>
 
         <button type="submit">Guardar</button>
       </form>
 
-      <h3 v-if="lista.length">Hospedajes cargados</h3>
+      <h4 v-if="lista.length">Hospedajes cargados</h4>
 
       <table v-if="lista.length" class="tabla">
         <thead>
@@ -143,17 +161,10 @@ Vue.component('hospedajes', {
   }
 })
 
-/* 🔴 ESTO ES LO QUE FALTABA 🔴 */
-new Vue({
-  el: '#app',
-  data: {
-    view: 'hospedajes'
-  }
-})
 Vue.component('gastronomia', {
   template: `
-    <div class="panel">
-      <h2>Gastronomía</h2>
+    <div>
+      <h3>Gastronomía</h3>
 
       <form @submit.prevent="guardar" class="formulario">
         <label>
@@ -204,14 +215,14 @@ Vue.component('gastronomia', {
         </label>
 
         <label>
-          Descripción de los servicios
+          Descripción
           <textarea v-model="form.descripcion"></textarea>
         </label>
 
         <button type="submit">Guardar</button>
       </form>
 
-      <h3 v-if="lista.length">Locales gastronómicos</h3>
+      <h4 v-if="lista.length">Locales gastronómicos</h4>
 
       <table v-if="lista.length" class="tabla">
         <thead>
@@ -253,7 +264,7 @@ Vue.component('gastronomia', {
   `,
   data() {
     return {
-      form: { nombre: '', tipo: '', horarios: '', ubicacion: '', fotos: '', telefonoFijo: '', celular: '', contacto: '', descripcion: '' },
+      form: { nombre: '', tipo: '', horarios: '', ubicacion: '', fotos: [], telefonoFijo: '', celular: '', contacto: '', descripcion: '' },
       lista: []
     }
   },
@@ -284,6 +295,7 @@ Vue.component('gastronomia', {
     }
   }
 })
+
 Vue.component('eventos', {
   template: `
     <div class="panel">
@@ -313,6 +325,11 @@ Vue.component('eventos', {
           </select>
         </label>
 
+        <label>
+          Descripción
+          <textarea v-model="form.descripcion"></textarea>
+        </label>
+
         <button type="submit">Guardar</button>
       </form>
 
@@ -325,6 +342,7 @@ Vue.component('eventos', {
             <th>Fecha</th>
             <th>Lugar</th>
             <th>Entrada</th>
+            <th>Descripción</th>
             <th></th>
           </tr>
         </thead>
@@ -334,6 +352,7 @@ Vue.component('eventos', {
             <td>{{ item.fecha }}</td>
             <td>{{ item.lugar }}</td>
             <td>{{ item.entrada }}</td>
+            <td>{{ item.descripcion }}</td>
             <td>
               <button @click="eliminar(i)">❌</button>
             </td>
@@ -348,7 +367,8 @@ Vue.component('eventos', {
         nombre: '',
         fecha: '',
         lugar: '',
-        entrada: 'Gratis'
+        entrada: 'Gratis',
+        descripcion: ''
       },
       lista: []
     }
@@ -361,7 +381,7 @@ Vue.component('eventos', {
     guardar() {
       this.lista.push({ ...this.form })
       localStorage.setItem('eventos', JSON.stringify(this.lista))
-      this.form = { nombre: '', fecha: '', lugar: '', entrada: 'Gratis' }
+      this.form = { nombre: '', fecha: '', lugar: '', entrada: 'Gratis', descripcion: '' }
     },
     eliminar(index) {
       this.lista.splice(index, 1)
@@ -369,6 +389,7 @@ Vue.component('eventos', {
     }
   }
 })
+
 Vue.component('puntos', {
   template: `
     <div class="panel">
@@ -392,7 +413,7 @@ Vue.component('puntos', {
 
         <label>
           Descripción
-          <input v-model="form.descripcion">
+          <textarea v-model="form.descripcion"></textarea>
         </label>
 
         <label>
@@ -468,5 +489,13 @@ Vue.component('puntos', {
         reader.readAsDataURL(file);
       }
     }
+  }
+})
+
+/* 🔴 ESTO ES LO QUE FALTABA 🔴 */
+new Vue({
+  el: '#app',
+  data: {
+    view: 'prestadores'
   }
 })
