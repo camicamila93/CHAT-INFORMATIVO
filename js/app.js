@@ -1,3 +1,46 @@
+Vue.component('login', {
+  template: `
+    <div class="panel">
+      <h2>Ingreso</h2>
+      <form class="formulario" @submit.prevent="login">
+        <label for="codigo">
+          Código de cliente:
+          <input type="text" v-model="form.codigo" required>
+        </label>
+        <label for="usuario">
+          Usuario:
+          <input type="text" v-model="form.usuario" required>
+        </label>
+        <label for="contrasena">
+          Contraseña:
+          <input type="password" v-model="form.contrasena" required>
+        </label>
+        <button type="submit">Iniciar Sesión</button>
+      </form>
+      <p style="text-align: center; margin-top: 15px;">
+        <a href="recup contra.html" style="color: #4682b4; text-decoration: none;">¿Olvidaste tu contraseña?</a>
+      </p>
+    </div>
+  `,
+  data() {
+    return {
+      form: {
+        codigo: '',
+        usuario: '',
+        contrasena: ''
+      }
+    }
+  },
+  methods: {
+    login() {
+      // Aquí puedes agregar lógica de autenticación
+      alert('Login exitoso (simulado)');
+      // Cambiar a vista principal después del login
+      this.$parent.view = 'prestadores';
+    }
+  }
+})
+
 Vue.component('prestadores', {
   template: `
     <div class="panel">
@@ -492,10 +535,9 @@ Vue.component('puntos', {
   }
 })
 
-/* 🔴 ESTO ES LO QUE FALTABA 🔴 */
 new Vue({
   el: '#app',
   data: {
-    view: 'prestadores'
+    view: 'login'
   }
 })
