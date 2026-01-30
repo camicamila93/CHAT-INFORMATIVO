@@ -54,7 +54,7 @@ Vue.component('login', {
 Vue.component('prestadores', {
   template: `
     <div class="panel">
-      <h2>Prestadores Turísticos</h2>
+      <h2>Gestión de Prestadores Turísticos</h2>
       <div style="margin-bottom: 20px;">
         <button @click="tipo='hospedajes'" :class="{ active: tipo === 'hospedajes' }">Hospedajes</button>
         <button @click="tipo='gastronomia'" :class="{ active: tipo === 'gastronomia' }">Gastronomía</button>
@@ -548,6 +548,6 @@ Vue.component('puntos', {
 new Vue({
   el: '#app',
   data: {
-    view: 'login'
+    view: 'prestadores'
   }
 })
