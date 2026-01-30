@@ -33,10 +33,20 @@ Vue.component('login', {
   },
   methods: {
     login() {
-      // Aquí puedes agregar lógica de autenticación
-      alert('Login exitoso (simulado)');
-      // Cambiar a vista principal después del login
-      this.$parent.view = 'prestadores';
+      login(this.form.codigo, this.form.usuario, this.form.contrasena)
+        .then((response) => {
+          // Guardar token en localStorage
+          if (response.data.token) {
+            localStorage.setItem('token', response.data.token)
+            localStorage.setItem('usuario', this.form.usuario)
+          }
+          alert('Login exitoso');
+          // Cambiar a vista principal después del login
+          this.$parent.view = 'prestadores';
+        })
+        .catch((error) => {
+          alert('Error en login: ' + (error.response?.data?.message || error.message));
+        });
     }
   }
 })
